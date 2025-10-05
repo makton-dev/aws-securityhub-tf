@@ -30,7 +30,7 @@ resource "aws_s3_bucket_policy" "config_logging_policy" {
 # Define AWS S3 bucket policies SSL only and for the Config recorder
 data "aws_iam_policy_document" "config_bucket_policy" {
   statement {
-    sid = "AWSConfigBucketPermissionsCheck"
+    sid    = "AWSConfigBucketPermissionsCheck"
     effect = "Allow"
 
     principals {
@@ -45,14 +45,14 @@ data "aws_iam_policy_document" "config_bucket_policy" {
     ]
 
     condition {
-      test = "StringEquals"
+      test     = "StringEquals"
       variable = "aws:SourceAccount"
-      values = [ data.aws_caller_identity.current.account_id ]
+      values   = [data.aws_caller_identity.current.account_id]
     }
   }
 
   statement {
-    sid = "AWSConfigBucketDelivery"
+    sid    = "AWSConfigBucketDelivery"
     effect = "Allow"
 
     principals {
@@ -60,21 +60,21 @@ data "aws_iam_policy_document" "config_bucket_policy" {
       identifiers = ["config.amazonaws.com"]
     }
 
-    actions = ["s3:PutObject"]  # "s3:PutObject"]
+    actions = ["s3:PutObject"] # "s3:PutObject"]
 
     resources = [
-      "${aws_s3_bucket.config_bucket.arn}/*"   #/AWSLogs/${data.aws_caller_identity.current.account_id}/config/*"
+      "${aws_s3_bucket.config_bucket.arn}/*" #/AWSLogs/${data.aws_caller_identity.current.account_id}/config/*"
     ]
 
     condition {
-      test = "StringEquals"
+      test     = "StringEquals"
       variable = "aws:SourceAccount"
-      values = [ data.aws_caller_identity.current.account_id ]
+      values   = [data.aws_caller_identity.current.account_id]
     }
   }
 
   statement {
-    sid = "AWSConfigBucketSecureTransport"
+    sid    = "AWSConfigBucketSecureTransport"
     effect = "Deny"
 
     principals {
@@ -90,9 +90,9 @@ data "aws_iam_policy_document" "config_bucket_policy" {
     ]
 
     condition {
-      test = "Bool"
+      test     = "Bool"
       variable = "aws:SecureTransport"
-      values = ["false"]
+      values   = ["false"]
     }
   }
 }

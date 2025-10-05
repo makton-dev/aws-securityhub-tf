@@ -14,7 +14,7 @@ terraform {
       version = "~> 6.15"
     }
     time = {
-      source = "hashicorp/time"
+      source  = "hashicorp/time"
       version = "0.13.1"
     }
   }
@@ -22,7 +22,7 @@ terraform {
 
 provider "aws" {
   # can set region and profile or comment them out.
-  region = "" 
+  region  = ""
   profile = ""
 
   # these will be added to all resources and good for managing the project resources

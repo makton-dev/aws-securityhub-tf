@@ -15,15 +15,15 @@ resource "aws_config_configuration_recorder" "config_recorder" {
     recording_frequency = "CONTINUOUS"
   }
 
-  depends_on = [ aws_s3_bucket_policy.config_logging_policy ]
+  depends_on = [aws_s3_bucket_policy.config_logging_policy]
 }
 
 # S3 bucket will be the channel
 resource "aws_config_delivery_channel" "config_channel" {
-  name = "${var.project}-config-channel"
+  name           = "${var.project}-config-channel"
   s3_bucket_name = aws_s3_bucket.config_bucket.id
-  
-  depends_on     = [ aws_config_configuration_recorder.config_recorder ]
+
+  depends_on = [aws_config_configuration_recorder.config_recorder]
 }
 
 resource "aws_config_configuration_recorder_status" "config_recorder_status" {
